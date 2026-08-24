@@ -14,3 +14,8 @@ def count_vowels(text: str) -> int:
 def is_anagram(text1: str, text2: str) -> bool:
     return sorted(text1.lower()) == sorted(text2.lower())
 
+
+def count_words(text: str) -> int:
+    return len(text.split())
+    
+

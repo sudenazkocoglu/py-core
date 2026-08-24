@@ -1,4 +1,10 @@
-from src.strings import count_vowels, is_anagram, is_palindrome, reverse_string
+from src.strings import (
+    count_vowels,
+    count_words,
+    is_anagram,
+    is_palindrome,
+    reverse_string,
+)
 
 
 def test_reverse_string() -> None:
@@ -20,4 +26,8 @@ def test_is_anagram() -> None:
     assert is_anagram("triangle", "integral") is True
     assert is_anagram("hello", "world") is False
     assert is_anagram("a", "ab") is False
-    
+def test_count_words() -> None:
+    assert count_words("merhaba dünya") == 2
+    assert count_words("python programlama dili") == 3
+    assert count_words("   ") == 0
+    assert count_words("") == 0

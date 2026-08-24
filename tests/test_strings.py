@@ -5,6 +5,7 @@ from src.strings import (
     is_anagram,
     is_palindrome,
     reverse_string,
+    truncate_string,
 )
 
 
@@ -46,4 +47,9 @@ def test_capitalize_words() -> None:
     assert capitalize_words("merhaba dünya") == "Merhaba Dünya"
     assert capitalize_words("python programlama dili") == "Python Programlama Dili"
     assert capitalize_words("") == ""
+
+def test_truncate_string() -> None:
+    assert truncate_string("Merhaba Dünya", 7) == "Merhaba..."
+    assert truncate_string("Python", 10) == "Python"
+    assert truncate_string("Test", 4) == "Test"
     

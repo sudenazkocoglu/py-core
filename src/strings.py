@@ -21,5 +21,11 @@ def count_words(text: str) -> int:
 
 def capitalize_words(text: str) -> str:
     return " ".join(word.capitalize() for word in text.split())
+
+
+def truncate_string(text: str, max_length: int) -> str:
+    if len(text) <= max_length:
+        return text
+    return text[:max_length] + "..."
     
 

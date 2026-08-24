@@ -5,6 +5,7 @@ from src.strings import (
     is_anagram,
     is_palindrome,
     longest_word,
+    remove_duplicates,
     reverse_string,
     slugify,
     truncate_string,
@@ -63,4 +64,9 @@ def test_longest_word() -> None:
     assert longest_word("Python programlama dili çok güzel") == "programlama"
     assert longest_word("merhaba dünya") == "merhaba"
     assert longest_word("") == ""
+
+def test_remove_duplicates() -> None:
+    assert remove_duplicates("programming") == "progamin"
+    assert remove_duplicates("hello") == "helo"
+    assert remove_duplicates("") == ""
     

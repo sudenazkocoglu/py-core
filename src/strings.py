@@ -50,5 +50,8 @@ def longest_word(text: str) -> str:
     if not words:
         return ""
     return max(words, key=len)
+
+def remove_duplicates(text: str) -> str:
+    return "".join(dict.fromkeys(text))
     
 

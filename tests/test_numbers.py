@@ -1,4 +1,4 @@
-from src.numbers import factorial, fibonacci, is_prime
+from src.numbers import factorial, fibonacci, gcd, is_prime
 
 
 def test_is_prime() -> None:
@@ -21,3 +21,9 @@ def test_fibonacci() -> None:
     assert fibonacci(5) == 5
     assert fibonacci(6) == 8
     assert fibonacci(7) == 13
+
+def test_gcd() -> None:
+    assert gcd(12, 15) == 3
+    assert gcd(24, 36) == 12
+    assert gcd(7, 5) == 1
+    assert gcd(0, 5) == 5

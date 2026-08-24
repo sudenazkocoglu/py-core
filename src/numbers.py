@@ -51,3 +51,15 @@ def reverse_number(n: int) -> int:
     sign = -1 if n < 0 else 1
     reversed_str = str(abs(n))[::-1]
     return sign * int(reversed_str)
+
+def prime_factors(n: int) -> list[int]:
+    factors = []
+    d = 2
+    while d * d <= n:
+        while (n % d) == 0:
+            factors.append(d)
+            n //= d
+        d += 1
+    if n > 1:
+        factors.append(n)
+    return factors

@@ -4,6 +4,7 @@ from src.numbers import (
     gcd,
     is_prime,
     lcm,
+    prime_factors,
     reverse_number,
     sum_of_digits,
 )
@@ -52,3 +53,9 @@ def test_reverse_number() -> None:
     assert reverse_number(-456) == -654
     assert reverse_number(120) == 21
     assert reverse_number(0) == 0
+
+def test_prime_factors() -> None:
+    assert prime_factors(12) == [2, 2, 3]
+    assert prime_factors(35) == [5, 7]
+    assert prime_factors(2) == [2]
+    assert prime_factors(1) == []

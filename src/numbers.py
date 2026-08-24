@@ -41,3 +41,6 @@ def lcm(a: int, b: int) -> int:
     if a == 0 or b == 0:
         return 0
     return abs(a * b) // gcd(a, b) 
+
+def sum_of_digits(n: int) -> int:
+    return sum(int(digit) for digit in str(abs(n)))

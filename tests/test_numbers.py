@@ -1,4 +1,4 @@
-from src.numbers import factorial, fibonacci, gcd, is_prime, lcm
+from src.numbers import factorial, fibonacci, gcd, is_prime, lcm, sum_of_digits
 
 
 def test_is_prime() -> None:
@@ -32,3 +32,9 @@ def test_lcm() -> None:
     assert lcm(4, 6) == 12
     assert lcm(3, 5) == 15
     assert lcm(12, 15) == 60
+
+def test_sum_of_digits() -> None:
+    assert sum_of_digits(123) == 6
+    assert sum_of_digits(456) == 15
+    assert sum_of_digits(0) == 0
+    assert sum_of_digits(-123) == 6

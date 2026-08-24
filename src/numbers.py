@@ -71,3 +71,9 @@ def is_armstrong(n: int) -> bool:
     power = len(digits)
     total: int = sum(int(d) ** power for d in digits)
     return n == total
+
+def is_palindrome_number(n: int) -> bool:
+    if n < 0:
+        return False
+    s = str(n)
+    return s == s[::-1]

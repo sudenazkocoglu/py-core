@@ -3,6 +3,7 @@ from src.numbers import (
     fibonacci,
     gcd,
     is_armstrong,
+    is_palindrome_number,
     is_prime,
     lcm,
     prime_factors,
@@ -66,3 +67,9 @@ def test_is_armstrong() -> None:
     assert is_armstrong(9474) is True
     assert is_armstrong(123) is False
     assert is_armstrong(0) is True
+
+def test_is_palindrome_number() -> None:
+    assert is_palindrome_number(121) is True
+    assert is_palindrome_number(123) is False
+    assert is_palindrome_number(0) is True
+    assert is_palindrome_number(-121) is False

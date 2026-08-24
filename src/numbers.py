@@ -44,3 +44,10 @@ def lcm(a: int, b: int) -> int:
 
 def sum_of_digits(n: int) -> int:
     return sum(int(digit) for digit in str(abs(n)))
+
+def reverse_number(n: int) -> int:
+    if n == 0:
+        return 0
+    sign = -1 if n < 0 else 1
+    reversed_str = str(abs(n))[::-1]
+    return sign * int(reversed_str)

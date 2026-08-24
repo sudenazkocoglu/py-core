@@ -44,5 +44,11 @@ def slugify(text: str) -> str:
     text = re.sub(r"[^\w\s-]", "", text)
     text = re.sub(r"[-\s]+", "-", text).strip("-")
     return text
-    
+
+    def longest_word(text: str) -> str:
+    words = text.split()
+    if not words:
+        return ""
+    return max(words, key=len)
+
 

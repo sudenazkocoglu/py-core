@@ -4,6 +4,7 @@ from src.strings import (
     count_words,
     is_anagram,
     is_palindrome,
+    longest_word,
     reverse_string,
     slugify,
     truncate_string,
@@ -57,4 +58,9 @@ def test_truncate_string() -> None:
 def test_slugify() -> None:
     assert slugify("Merhaba Dünya!") == "merhaba-dunya"
     assert slugify("Python ile Programlama") == "python-ile-programlama"
+
+def test_longest_word() -> None:
+    assert longest_word("Python programlama dili çok güzel") == "programlama"
+    assert longest_word("merhaba dünya") == "merhaba"
+    assert longest_word("") == ""
     

@@ -1,3 +1,7 @@
+import re
+import unicodedata
+
+
 def reverse_string(text: str) -> str:
     return text[::-1]
 
@@ -27,5 +31,18 @@ def truncate_string(text: str, max_length: int) -> str:
     if len(text) <= max_length:
         return text
     return text[:max_length] + "..."
+
+
+def slugify(text: str) -> str:
+    # Türkçe karakterleri İngilizce karşılıklarına dönüştür
+    tr_chars = str.maketrans("çğışüöÇĞİŞÜÖ", "cgisuoCGISUO")
+    text = text.translate(tr_chars)
+    # Aksanları temizle ve ASCII'ye çevir
+    text = unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode("ascii")
+    text = text.lower()
+    # Alfanumerik olmayan karakterleri kaldır, boşlukları tire ile değiştir
+    text = re.sub(r"[^\w\s-]", "", text)
+    text = re.sub(r"[-\s]+", "-", text).strip("-")
+    return text
     
 

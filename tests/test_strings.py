@@ -5,6 +5,7 @@ from src.strings import (
     is_anagram,
     is_palindrome,
     reverse_string,
+    slugify,
     truncate_string,
 )
 
@@ -52,4 +53,8 @@ def test_truncate_string() -> None:
     assert truncate_string("Merhaba Dünya", 7) == "Merhaba..."
     assert truncate_string("Python", 10) == "Python"
     assert truncate_string("Test", 4) == "Test"
+
+def test_slugify() -> None:
+    assert slugify("Merhaba Dünya!") == "merhaba-dunya"
+    assert slugify("Python ile Programlama") == "python-ile-programlama"
     

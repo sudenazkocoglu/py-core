@@ -17,5 +17,9 @@ def is_anagram(text1: str, text2: str) -> bool:
 
 def count_words(text: str) -> int:
     return len(text.split())
+
+
+def capitalize_words(text: str) -> str:
+    return " ".join(word.capitalize() for word in text.split())
     
 

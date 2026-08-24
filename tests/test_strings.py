@@ -1,10 +1,4 @@
-from src.strings import (
-    count_vowels,
-    count_words,
-    is_anagram,
-    is_palindrome,
-    reverse_string,
-)
+from src.strings import is_anagram, count_vowels, is_palindrome, reverse_string, count_words, capitalize_words
 
 
 def test_reverse_string() -> None:
@@ -31,3 +25,8 @@ def test_count_words() -> None:
     assert count_words("python programlama dili") == 3
     assert count_words("   ") == 0
     assert count_words("") == 0
+    def test_capitalize_words() -> None:
+    assert capitalize_words("merhaba dünya") == "Merhaba Dünya"
+    assert capitalize_words("python programlama dili") == "Python Programlama Dili"
+    assert capitalize_words("") == ""
+    

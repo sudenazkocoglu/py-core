@@ -63,3 +63,10 @@ def prime_factors(n: int) -> list[int]:
     if n > 1:
         factors.append(n)
     return factors
+
+def is_armstrong(n: int) -> bool:
+    if n < 0:
+        return False
+    digits = str(n)
+    power = len(digits)
+    return n == sum(int(d) ** power for d in digits)

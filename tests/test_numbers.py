@@ -2,6 +2,7 @@ from src.numbers import (
     factorial,
     fibonacci,
     gcd,
+    is_armstrong,
     is_prime,
     lcm,
     prime_factors,
@@ -59,3 +60,9 @@ def test_prime_factors() -> None:
     assert prime_factors(35) == [5, 7]
     assert prime_factors(2) == [2]
     assert prime_factors(1) == []
+
+def test_is_armstrong() -> None:
+    assert is_armstrong(153) is True
+    assert is_armstrong(9474) is True
+    assert is_armstrong(123) is False
+    assert is_armstrong(0) is True

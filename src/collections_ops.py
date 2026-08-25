@@ -64,3 +64,13 @@ def sort_dicts_by_key(items: list[dict[str, Any]], key: str, reverse: bool = Fal
 
 def get_dict_intersection(d1: dict[str, Any], d2: dict[str, Any]) -> dict[str, Any]:
     return {k: d1[k] for k in d1 if k in d2 and d1[k] == d2[k]}
+
+def flatten_dict(d: dict[str, Any], parent_key: str = "", sep: str = ".") -> dict[str, Any]:
+    items: list[tuple[str, Any]] = []
+    for k, v in d.items():
+        new_key = f"{parent_key}{sep}{k}" if parent_key else k
+        if isinstance(v, dict):
+            items.extend(flatten_dict(v, new_key, sep=sep).items())
+        else:
+            items.append((new_key, v))
+    return dict(items)

@@ -2,6 +2,7 @@ from src.collections_ops import (
     chunk_list,
     deep_merge_dicts,
     find_common_elements,
+    flatten_dict,
     flatten_list,
     get_dict_intersection,
     get_frequencies,
@@ -101,3 +102,10 @@ def test_get_dict_intersection() -> None:
     assert get_dict_intersection(d1, d2) == {"b": 2}
     assert get_dict_intersection({"x": 1}, {"y": 2}) == {}
     assert get_dict_intersection({}, {"a": 1}) == {}
+
+def test_flatten_dict() -> None:
+    nested = {"a": {"b": 1, "c": 2}, "d": 3}
+    expected = {"a.b": 1, "a.c": 2, "d": 3}
+    assert flatten_dict(nested) == expected
+    assert flatten_dict({"x": 1}) == {"x": 1}
+    assert flatten_dict({}) == {}

@@ -2,7 +2,7 @@ import time
 
 import pytest
 
-from src.decorators_ops import measure_execution_time, retry_on_exception
+from src.decorators_ops import measure_execution_time, memoize, retry_on_exception
 
 
 def test_retry_on_exception() -> None:
@@ -43,4 +43,25 @@ def test_measure_execution_time(capsys: pytest.CaptureFixture[str]) -> None:
     # Konsola süre ile ilgili bir çıktı basmış olmalı
     captured = capsys.readouterr()
     assert "Execution time" in captured.out or "dummy_task" in captured.out
+
+def test_memoize() -> None:
+    call_count = 0
+
+    @memoize
+    def expensive_computation(x: int) -> int:
+        nonlocal call_count
+        call_count += 1
+        return x * 2
+
+    # İlk çağrılarda hesaplama yapılır
+    assert expensive_computation(5) == 10
+    assert call_count == 1
+
+    # Aynı argümanla tekrar çağrıldığında cache'ten döner, count artmaz
+    assert expensive_computation(5) == 10
+    assert call_count == 1
+
+    # Farklı argümanla çağrıldığında yeniden hesaplanır
+    assert expensive_computation(10) == 20
+    assert call_count == 2
 

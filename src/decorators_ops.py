@@ -34,3 +34,16 @@ def retry_on_exception(exception: type[Exception] = Exception, retries: int = 3,
             raise RuntimeError("Maximum retries reached without success.")
         return cast(F, wrapper)
     return decorator
+
+def memoize(func: F) -> F:
+    cache: dict[tuple[Any, ...], Any] = {}
+    
+    @wraps(func)
+    def wrapper(*args: Any, **kwargs: Any) -> Any:
+        # Argümanları anahtar (key) olarak kullanmak için tuple yapısına dönüştürelim
+        key = (args, tuple(sorted(kwargs.items())))
+        if key not in cache:
+            cache[key] = func(*args, **kwargs)
+        return cache[key]
+        
+    return cast(F, wrapper)

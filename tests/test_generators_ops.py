@@ -8,6 +8,7 @@ from src.generators_ops import (
     fibonacci_generator,
     filter_generator,
     generate_combinations,
+    generate_permutations,
     infinite_counter,
     map_generator,
 )
@@ -112,3 +113,18 @@ def test_generate_combinations() -> None:
     # Boş liste veya tek elemanlı liste testleri
     assert list(generate_combinations([], 2)) == []
     assert list(generate_combinations(["A"], 2)) == []
+
+def test_generate_permutations() -> None:
+    items = ["A", "B"]
+    # 2'li permütasyonları üreten jeneratör
+    gen = generate_permutations(items, 2)
+    
+    assert next(gen) == ("A", "B")
+    assert next(gen) == ("B", "A")
+    
+    # Elemanlar bittiğinde StopIteration fırlatmalı
+    with pytest.raises(StopIteration):
+        next(gen)
+        
+    # Boş liste veya geçersiz uzunluk testleri
+    assert list(generate_permutations([], 2)) == []

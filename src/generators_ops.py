@@ -1,5 +1,5 @@
 from collections.abc import Callable, Generator, Iterable
-from itertools import combinations
+from itertools import combinations, permutations
 from typing import TypeVar
 
 T = TypeVar('T')
@@ -36,3 +36,6 @@ def chain_generators(*iterables: Iterable[T]) -> Generator[T, None, None]:
 
 def generate_combinations(iterable: Iterable[T], r: int) -> Generator[tuple[T, ...], None, None]:
     yield from combinations(iterable, r)
+
+def generate_permutations(iterable: Iterable[T], r: int | None = None) -> Generator[tuple[T, ...], None, None]:
+    yield from permutations(iterable, r)

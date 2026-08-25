@@ -1,4 +1,7 @@
-from collections.abc import Generator
+from collections.abc import Callable, Generator, Iterable
+from typing import TypeVar
+
+T = TypeVar('T')
 
 
 def fibonacci_generator(n: int) -> Generator[int, None, None]:
@@ -15,3 +18,8 @@ def infinite_counter(start: int, step: int = 1) -> Generator[int, None, None]:
     while True:
         yield current
         current += step
+
+def filter_generator(iterable: Iterable[T], predicate: Callable[[T], bool]) -> Generator[T, None, None]:
+    for item in iterable:
+        if predicate(item):
+            yield item

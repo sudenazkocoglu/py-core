@@ -28,3 +28,7 @@ def filter_generator(iterable: Iterable[T], predicate: Callable[[T], bool]) -> G
 def map_generator(iterable: Iterable[T], mapper: Callable[[T], U]) -> Generator[U, None, None]:
     for item in iterable:
         yield mapper(item)
+
+def chain_generators(*iterables: Iterable[T]) -> Generator[T, None, None]:
+    for iterable in iterables:
+        yield from iterable 

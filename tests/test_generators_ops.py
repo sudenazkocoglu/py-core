@@ -2,6 +2,7 @@
 import pytest
 
 from src.generators_ops import (
+    chain_generators,
     fibonacci_generator,
     filter_generator,
     infinite_counter,
@@ -86,3 +87,26 @@ def test_map_generator() -> None:
     words = ["hello", "world"]
     upper_gen = map_generator(words, lambda s: s.upper())
     assert list(upper_gen) == ["HELLO", "WORLD"]
+
+def test_chain_generators() -> None:
+    list1 = [1, 2]
+    # Basit bir jeneratör (tuple comprehension)
+    gen2 = (x for x in [3, 4]) 
+    list3 = [5]
+    
+    chained = chain_generators(list1, gen2, list3)
+    
+    assert next(chained) == 1
+    assert next(chained) == 2
+    assert next(chained) == 3
+    assert next(chained) == 4
+    assert next(chained) == 5
+    
+    # Elemanlar bittiğinde StopIteration fırlatmalı
+    import pytest
+    with pytest.raises(StopIteration):
+        next(chained)
+        
+    # Boş yapılarla test
+    assert list(chain_generators([], [], [99])) == [99]
+    assert list(chain_generators()) == []

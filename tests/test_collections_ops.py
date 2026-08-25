@@ -1,4 +1,4 @@
-from src.collections_ops import chunk_list, flatten_list, get_frequencies
+from src.collections_ops import chunk_list, flatten_list, get_frequencies, merge_dicts
 
 
 def test_flatten_list() -> None:
@@ -17,3 +17,9 @@ def test_chunk_list() -> None:
     assert chunk_list(["a", "b", "c"], 1) == [["a"], ["b"], ["c"]]
     assert chunk_list([], 3) == []
     assert chunk_list([1, 2], 5) == [[1, 2]]
+
+def test_merge_dicts() -> None:
+    assert merge_dicts({"a": 1, "b": 2}, {"b": 3, "c": 4}) == {"a": 1, "b": 5, "c": 4}
+    assert merge_dicts({}, {"x": 10}) == {"x": 10}
+    assert merge_dicts({"y": 5}, {}) == {"y": 5}
+    assert merge_dicts({}, {}) == {}

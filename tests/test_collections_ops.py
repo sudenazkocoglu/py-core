@@ -5,6 +5,7 @@ from src.collections_ops import (
     get_frequencies,
     invert_dict,
     merge_dicts,
+    rotate_list,
 )
 
 
@@ -41,3 +42,10 @@ def test_invert_dict() -> None:
     assert invert_dict({"a": 1, "b": 2}) == {1: "a", 2: "b"}
     assert invert_dict({"x": "y"}) == {"y": "x"}
     assert invert_dict({}) == {}
+
+def test_rotate_list() -> None:
+    assert rotate_list([1, 2, 3, 4, 5], 2) == [4, 5, 1, 2, 3]
+    assert rotate_list(["a", "b", "c"], 1) == ["c", "a", "b"]
+    assert rotate_list([1, 2], 5) == [2, 1]  # 5 adım kaydırmak aslında 1 adım kaydırmaktır (5 % 2 = 1)
+    assert rotate_list([], 3) == []
+    assert rotate_list([1, 2, 3], 0) == [1, 2, 3]

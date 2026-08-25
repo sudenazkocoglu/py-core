@@ -27,3 +27,13 @@ U = TypeVar('U')
 
 def invert_dict(dictionary: dict[T, U]) -> dict[U, T]:
     return {value: key for key, value in dictionary.items()}
+
+def rotate_list(items: list[T], k: int) -> list[T]:
+    if not items:
+        return []
+    
+    k = k % len(items)
+    if k == 0:
+        return items
+        
+    return items[-k:] + items[:-k]

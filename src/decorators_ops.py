@@ -3,10 +3,8 @@ import os
 import time
 import types
 from collections.abc import Callable
-from functools import (
-    Path,  # veya from pathlib import Path
-    wraps,
-)
+from functools import wraps
+from pathlib import Path
 from typing import Any, TypeVar, cast
 
 from typing_extensions import Self

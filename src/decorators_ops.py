@@ -85,3 +85,15 @@ def validate_types(**expected_types: Any) -> Callable[[F], F]:
             return func(*args, **kwargs)
         return cast(F, wrapper)
     return decorator
+
+class TimerContext:
+    def __init__(self) -> None:
+        self.start_time: float = 0.0
+        self.elapsed: float = 0.0
+
+    def __enter__(self) -> "TimerContext":
+        self.start_time = time.perf_counter()
+        return self
+
+    def __exit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
+        self.elapsed = time.perf_counter() - self.start_time

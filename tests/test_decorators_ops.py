@@ -3,6 +3,7 @@ import time
 import pytest
 
 from src.decorators_ops import (
+    TimerContext,
     log_calls,
     measure_execution_time,
     memoize,
@@ -102,3 +103,10 @@ def test_validate_types() -> None:
 
     with pytest.raises(TypeError):
         repeat_string(3, 123)  # type: ignore
+
+def test_timer_context() -> None:
+    with TimerContext() as timer:
+        time.sleep(0.05)
+    
+    # Süre ölçülmüş ve 0'dan büyük olmalı
+    assert timer.elapsed >= 0.04

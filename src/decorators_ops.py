@@ -1,9 +1,12 @@
+
+import os
 import time
 import types
-import os
-from pathlib import Path
 from collections.abc import Callable
-from functools import wraps
+from functools import (
+    Path,  # veya from pathlib import Path
+    wraps,
+)
 from typing import Any, TypeVar, cast
 
 from typing_extensions import Self
@@ -123,7 +126,7 @@ class SuppressException:
     ) -> bool:
         return exc_type is not None and issubclass(exc_type, self.exceptions)
 
-    class ChangeDirectory:
+class ChangeDirectory:
     def __init__(self, new_path: str | Path) -> None:
         self.new_path = Path(new_path)
         self.original_path: Path = Path()

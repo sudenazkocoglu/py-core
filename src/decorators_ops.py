@@ -119,7 +119,4 @@ class SuppressException:
         exc_val: BaseException | None,
         exc_tb: types.TracebackType | None,
     ) -> bool:
-        if exc_type is not None and issubclass(exc_type, self.exceptions):
-            # True döndürmek hatanın dışarı fırlatılmasını (bastırılmasını) sağlar
-            return True
-        return False
+        return exc_type is not None and issubclass(exc_type, self.exceptions)

@@ -62,3 +62,26 @@ def log_calls(func: F) -> F:
         return result
         
     return cast(F, wrapper)
+
+def validate_types(**expected_types: Any) -> Callable[[F], F]:
+    def decorator(func: F) -> F:
+        @wraps(func)
+        def wrapper(*args: Any, **kwargs: Any) -> Any:
+            # Pozisyonel argümanları isimleriyle eşleştirmek için inspect veya argüman adları kullanılabilir
+            # Basitlik için kwargs ve pozisyonel argümanların türlerini kontrol edelim
+            import inspect
+            sig = inspect.signature(func)
+            bound_args = sig.bind(*args, **kwargs)
+            bound_args.apply_defaults()
+            
+            for arg_name, arg_value in bound_args.arguments.items():
+                if arg_name in expected_types:
+                    expected_type = expected_types[arg_name]
+                    if not isinstance(arg_value, expected_type):
+                        raise TypeError(
+                            f"Argument '{arg_name}' must be of type {expected_type.__name__}, got {type(arg_value).__name__}"
+                        )
+            
+            return func(*args, **kwargs)
+        return cast(F, wrapper)
+    return decorator

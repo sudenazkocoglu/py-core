@@ -7,6 +7,7 @@ from src.decorators_ops import (
     measure_execution_time,
     memoize,
     retry_on_exception,
+    validate_types,
 )
 
 
@@ -87,3 +88,17 @@ def test_log_calls(capsys: pytest.CaptureFixture[str]) -> None:
     assert "5" in captured.out
     assert "20" in captured.out
 
+def test_validate_types() -> None:
+    @validate_types(a=int, b=str)
+    def repeat_string(a: int, b: str) -> str:
+        return b * a
+
+    # Doğru tiplerle çağrıldığında sorunsuz çalışmalı
+    assert repeat_string(3, "abc") == "abcabcabc"
+
+    # Yanlış tip gönderildiğinde TypeError fırlatmalı
+    with pytest.raises(TypeError):
+        repeat_string("3", "abc")  # type: ignore
+
+    with pytest.raises(TypeError):
+        repeat_string(3, 123)  # type: ignore

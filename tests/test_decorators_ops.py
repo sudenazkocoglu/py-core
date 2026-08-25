@@ -7,6 +7,7 @@ from src.decorators_ops import (
     ChangeDirectory,
     SuppressException,
     TimerContext,
+    TransactionContext,
     log_calls,
     measure_execution_time,
     memoize,
@@ -132,3 +133,24 @@ def test_change_directory(tmp_path: Path) -> None:
     
     # Blok dışına çıkıldığında orijinal dizine geri dönülmeli
     assert Path.cwd().resolve() == original_dir.resolve()
+
+def test_transaction_commit() -> None:
+    transaction = TransactionContext()
+    assert transaction.state == "IDLE"
+    
+    with transaction as txn:
+        assert txn.state == "ACTIVE"
+        # Hata olmadan blok bitiyor
+        
+    # Başarıyla bittiği için durum COMMITTED olmalı
+    assert transaction.state == "COMMITTED"
+
+def test_transaction_rollback() -> None:
+    transaction = TransactionContext()
+    
+    # Kasıtlı bir hata fırlatarak bloğu bozuyoruz
+    with pytest.raises(ValueError), transaction:
+        raise ValueError("Beklenmedik bir veritabanı hatası!")
+            
+    # Hata alındığı için durum ROLLED_BACK olmalı
+    assert transaction.state == "ROLLED_BACK"

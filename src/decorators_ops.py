@@ -141,3 +141,24 @@ class ChangeDirectory:
         exc_tb: types.TracebackType | None,
     ) -> None:
         os.chdir(self.original_path)
+
+class TransactionContext:
+    def __init__(self) -> None:
+        self.state: str = "IDLE"
+
+    def __enter__(self) -> Self:
+        self.state = "ACTIVE"
+        return self
+
+    def __exit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc_val: BaseException | None,
+        exc_tb: types.TracebackType | None,
+    ) -> None:
+        if exc_type is not None:
+            # İçeride bir hata olduysa işlemi iptal et (Rollback)
+            self.state = "ROLLED_BACK"
+        else:
+            # Hata yoksa işlemi onayla (Commit)
+            self.state = "COMMITTED"

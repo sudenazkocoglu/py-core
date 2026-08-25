@@ -1,4 +1,10 @@
-from src.collections_ops import chunk_list, flatten_list, get_frequencies, merge_dicts
+from src.collections_ops import (
+    chunk_list,
+    find_common_elements,
+    flatten_list,
+    get_frequencies,
+    merge_dicts,
+)
 
 
 def test_flatten_list() -> None:
@@ -23,3 +29,9 @@ def test_merge_dicts() -> None:
     assert merge_dicts({}, {"x": 10}) == {"x": 10}
     assert merge_dicts({"y": 5}, {}) == {"y": 5}
     assert merge_dicts({}, {}) == {}
+
+def test_find_common_elements() -> None:
+    assert sorted(find_common_elements([1, 2, 3], [2, 3, 4])) == [2, 3]
+    assert sorted(find_common_elements([1, 1, 2, 2], [1, 2, 3])) == [1, 2]
+    assert find_common_elements(["a", "b"], ["c", "d"]) == []
+    assert find_common_elements([], [1, 2]) == []

@@ -19,3 +19,6 @@ def merge_dicts(dict1: dict[T, int], dict2: dict[T, int]) -> dict[T, int]:
     for key, value in dict2.items():
         result[key] = result.get(key, 0) + value
     return result
+
+def find_common_elements(list1: list[T], list2: list[T]) -> list[T]:
+    return list(set(list1).intersection(set(list2)))

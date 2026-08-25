@@ -1,4 +1,6 @@
 
+from collections.abc import Generator
+
 import pytest
 
 from src.generators_ops import (
@@ -48,7 +50,7 @@ def test_filter_generator() -> None:
         next(gen)
         
     # Boş liste testi (listeye çevirerek hızlıca test edebiliriz)
-    empty_gen = filter_generator([], lambda x: x > 0)
+    empty_gen: Generator[int, None, None] = filter_generator([], lambda x: x > 0)
     assert list(empty_gen) == []
 
 def test_map_generator() -> None:

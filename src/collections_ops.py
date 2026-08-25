@@ -1,3 +1,4 @@
+from collections import defaultdict
 from typing import TypeVar
 
 T = TypeVar('T')
@@ -41,3 +42,10 @@ def rotate_list(items: list[T], k: int) -> list[T]:
 def get_list_difference(list1: list[T], list2: list[T]) -> list[T]:
     set2 = set(list2)
     return [item for item in list1 if item not in set2]
+
+def group_dicts_by_key(items: list[dict[str, U]], key: str) -> dict[U, list[dict[str, U]]]:
+    grouped: defaultdict[U, list[dict[str, U]]] = defaultdict(list)
+    for item in items:
+        group_key = item[key]
+        grouped[group_key].append(item)
+    return dict(grouped)

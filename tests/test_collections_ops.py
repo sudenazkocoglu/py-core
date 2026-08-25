@@ -4,6 +4,7 @@ from src.collections_ops import (
     flatten_list,
     get_frequencies,
     get_list_difference,
+    group_dicts_by_key,
     invert_dict,
     merge_dicts,
     rotate_list,
@@ -56,3 +57,16 @@ def test_get_list_difference() -> None:
     assert get_list_difference(["a", "b"], ["c", "d"]) == ["a", "b"]
     assert get_list_difference([1, 2], [1, 2]) == []
     assert get_list_difference([], [1, 2]) == []
+
+def test_group_dicts_by_key() -> None:
+    data = [
+        {"cat": "A", "val": 1},
+        {"cat": "B", "val": 2},
+        {"cat": "A", "val": 3}
+    ]
+    grouped = group_dicts_by_key(data, "cat")
+    assert grouped == {
+        "A": [{"cat": "A", "val": 1}, {"cat": "A", "val": 3}],
+        "B": [{"cat": "B", "val": 2}]
+    }
+    assert group_dicts_by_key([], "cat") == {}

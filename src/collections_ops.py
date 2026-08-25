@@ -61,3 +61,6 @@ def deep_merge_dicts(d1: dict[str, Any], d2: dict[str, Any]) -> dict[str, Any]:
 
 def sort_dicts_by_key(items: list[dict[str, Any]], key: str, reverse: bool = False) -> list[dict[str, Any]]:
     return sorted(items, key=lambda x: x[key], reverse=reverse)
+
+def get_dict_intersection(d1: dict[str, Any], d2: dict[str, Any]) -> dict[str, Any]:
+    return {k: d1[k] for k in d1 if k in d2 and d1[k] == d2[k]}

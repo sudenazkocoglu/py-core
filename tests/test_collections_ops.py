@@ -3,6 +3,7 @@ from src.collections_ops import (
     deep_merge_dicts,
     find_common_elements,
     flatten_list,
+    get_dict_intersection,
     get_frequencies,
     get_list_difference,
     group_dicts_by_key,
@@ -93,3 +94,10 @@ def test_sort_dicts_by_key() -> None:
     # Azalan (descending) sıralama testi
     sorted_desc = sort_dicts_by_key(data, "age", reverse=True)
     assert sorted_desc[0]["name"] == "Mehmet"
+
+def test_get_dict_intersection() -> None:
+    d1 = {"a": 1, "b": 2, "c": 3}
+    d2 = {"b": 2, "c": 99, "d": 4}
+    assert get_dict_intersection(d1, d2) == {"b": 2}
+    assert get_dict_intersection({"x": 1}, {"y": 2}) == {}
+    assert get_dict_intersection({}, {"a": 1}) == {}

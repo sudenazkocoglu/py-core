@@ -1,5 +1,5 @@
 from collections.abc import Callable, Generator, Iterable
-from itertools import combinations, permutations
+from itertools import combinations, permutations, product
 from typing import TypeVar
 
 T = TypeVar('T')
@@ -39,3 +39,6 @@ def generate_combinations(iterable: Iterable[T], r: int) -> Generator[tuple[T, .
 
 def generate_permutations(iterable: Iterable[T], r: int | None = None) -> Generator[tuple[T, ...], None, None]:
     yield from permutations(iterable, r)
+
+def generate_cartesian_product(*iterables: Iterable[T]) -> Generator[tuple[T, ...], None, None]:
+    yield from product(*iterables)

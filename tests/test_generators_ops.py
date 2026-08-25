@@ -7,6 +7,7 @@ from src.generators_ops import (
     chain_generators,
     fibonacci_generator,
     filter_generator,
+    generate_cartesian_product,
     generate_combinations,
     generate_permutations,
     infinite_counter,
@@ -128,3 +129,23 @@ def test_generate_permutations() -> None:
         
     # Boş liste veya geçersiz uzunluk testleri
     assert list(generate_permutations([], 2)) == []
+
+def test_generate_cartesian_product() -> None:
+    pool1 = [1, 2]
+    pool2 = ["a", "b"]
+    
+    # Cartesian çarpım üreten jeneratör
+    gen = generate_cartesian_product(pool1, pool2)
+    
+    assert next(gen) == (1, "a")
+    assert next(gen) == (1, "b")
+    assert next(gen) == (2, "a")
+    assert next(gen) == (2, "b")
+    
+    # Elemanlar bittiğinde StopIteration fırlatmalı
+    with pytest.raises(StopIteration):
+        next(gen)
+        
+    # Tek havuz veya boş havuz testleri
+    assert list(generate_cartesian_product([1, 2])) == [(1,), (2,)]
+    assert list(generate_cartesian_product([], [1, 2])) == []

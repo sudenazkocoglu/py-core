@@ -3,6 +3,7 @@ from src.collections_ops import (
     find_common_elements,
     flatten_list,
     get_frequencies,
+    invert_dict,
     merge_dicts,
 )
 
@@ -35,3 +36,8 @@ def test_find_common_elements() -> None:
     assert sorted(find_common_elements([1, 1, 2, 2], [1, 2, 3])) == [1, 2]
     assert find_common_elements(["a", "b"], ["c", "d"]) == []
     assert find_common_elements([], [1, 2]) == []
+
+def test_invert_dict() -> None:
+    assert invert_dict({"a": 1, "b": 2}) == {1: "a", 2: "b"}
+    assert invert_dict({"x": "y"}) == {"y": "x"}
+    assert invert_dict({}) == {}

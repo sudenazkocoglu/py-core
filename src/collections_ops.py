@@ -22,3 +22,8 @@ def merge_dicts(dict1: dict[T, int], dict2: dict[T, int]) -> dict[T, int]:
 
 def find_common_elements(list1: list[T], list2: list[T]) -> list[T]:
     return list(set(list1).intersection(set(list2)))
+
+U = TypeVar('U')
+
+def invert_dict(dictionary: dict[T, U]) -> dict[U, T]:
+    return {value: key for key, value in dictionary.items()}

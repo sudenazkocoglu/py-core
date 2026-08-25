@@ -49,3 +49,12 @@ def group_dicts_by_key(items: list[dict[str, U]], key: str) -> dict[U, list[dict
         group_key = item[key]
         grouped[group_key].append(item)
     return dict(grouped)
+
+def deep_merge_dicts(d1: dict, d2: dict) -> dict:
+    result = d1.copy()
+    for key, value in d2.items():
+        if key in result and isinstance(result[key], dict) and isinstance(value, dict):
+            result[key] = deep_merge_dicts(result[key], value)
+        else:
+            result[key] = value
+    return result

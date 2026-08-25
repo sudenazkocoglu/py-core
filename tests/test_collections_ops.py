@@ -1,5 +1,6 @@
 from src.collections_ops import (
     chunk_list,
+    deep_merge_dicts,
     find_common_elements,
     flatten_list,
     get_frequencies,
@@ -70,3 +71,10 @@ def test_group_dicts_by_key() -> None:
         "B": [{"cat": "B", "val": 2}]
     }
     assert group_dicts_by_key([], "cat") == {}
+
+def test_deep_merge_dicts() -> None:
+    d1 = {"a": {"x": 1}, "b": 2}
+    d2 = {"a": {"y": 2}, "c": 3}
+    expected = {"a": {"x": 1, "y": 2}, "b": 2, "c": 3}
+    assert deep_merge_dicts(d1, d2) == expected
+    assert deep_merge_dicts({}, {"x": 1}) == {"x": 1}

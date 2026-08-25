@@ -1,3 +1,4 @@
+from collections import deque
 from collections.abc import Callable, Generator, Iterable
 from itertools import combinations, islice, permutations, product
 from typing import TypeVar
@@ -53,3 +54,25 @@ def chunk_generator(iterable: Iterable[T], chunk_size: int) -> Generator[tuple[T
         if not batch:
             break
         yield tuple(batch)
+
+def moving_average_generator(iterable: Iterable[float], window_size: int) -> Generator[float, None, None]:
+    if window_size <= 0:
+        raise ValueError("Window size must be greater than zero.")
+    
+    iterator = iter(iterable)
+    window: deque[float] = deque(maxlen=window_size)
+    
+    # İlk pencereyi doldur
+    for _ in range(window_size):
+        try:
+            window.append(next(iterator))
+        except StopIteration:
+            return  # Veri pencere boyutundan küçükse hiç değer üretme
+            
+    # İlk ortalamayı ver
+    yield sum(window) / window_size
+    
+    # Kalan elemanlar için kayarak devam et
+    for item in iterator:
+        window.append(item)
+        yield sum(window) / window_size

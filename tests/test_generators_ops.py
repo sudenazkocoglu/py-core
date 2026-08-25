@@ -13,6 +13,7 @@ from src.generators_ops import (
     generate_permutations,
     infinite_counter,
     map_generator,
+    moving_average_generator,
 )
 
 
@@ -167,3 +168,26 @@ def test_chunk_generator() -> None:
     # Geçersiz chunk boyutu kontrolü (sıfır veya negatif olamaz)
     with pytest.raises(ValueError):
         list(chunk_generator([1, 2], 0))
+
+def test_moving_average_generator() -> None:
+    numbers = [1, 2, 3, 4, 5]
+    # 3'lü pencere boyutuyla hareketli ortalama
+    gen = moving_average_generator(numbers, 3)
+    
+    # (1+2+3)/3 = 2.0
+    assert next(gen) == 2.0
+    # (2+3+4)/3 = 3.0
+    assert next(gen) == 3.0
+    # (3+4+5)/3 = 4.0
+    assert next(gen) == 4.0
+    
+    # Elemanlar bittiğinde StopIteration fırlatmalı
+    with pytest.raises(StopIteration):
+        next(gen)
+        
+    # Pencere boyutu veri miktarından büyükse boş dönmeli
+    assert list(moving_average_generator([1, 2], 5)) == []
+    
+    # Geçersiz pencere boyutu ValueError fırlatmalı
+    with pytest.raises(ValueError):
+        list(moving_average_generator([1, 2, 3], 0))

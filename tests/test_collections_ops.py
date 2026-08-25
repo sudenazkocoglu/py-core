@@ -1,6 +1,7 @@
 from src.collections_ops import (
     chunk_list,
     deep_merge_dicts,
+    filter_dict_by_value,
     find_common_elements,
     flatten_dict,
     flatten_list,
@@ -109,3 +110,9 @@ def test_flatten_dict() -> None:
     assert flatten_dict(nested) == expected
     assert flatten_dict({"x": 1}) == {"x": 1}
     assert flatten_dict({}) == {}
+
+def test_filter_dict_by_value() -> None:
+    d = {"a": 1, "b": 5, "c": 10}
+    filtered = filter_dict_by_value(d, lambda x: x > 3)
+    assert filtered == {"b": 5, "c": 10}
+    assert filter_dict_by_value({}, lambda x: x > 0) == {}

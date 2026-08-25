@@ -1,4 +1,5 @@
 from collections import defaultdict
+from collections.abc import Callable
 from typing import Any, TypeVar
 
 T = TypeVar('T')
@@ -74,3 +75,6 @@ def flatten_dict(d: dict[str, Any], parent_key: str = "", sep: str = ".") -> dic
         else:
             items.append((new_key, v))
     return dict(items)
+
+def filter_dict_by_value(d: dict[str, Any], predicate: Callable[[Any], bool]) -> dict[str, Any]:
+    return {k: v for k, v in d.items() if predicate(v)}

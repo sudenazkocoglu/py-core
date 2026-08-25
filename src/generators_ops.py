@@ -2,6 +2,7 @@ from collections.abc import Callable, Generator, Iterable
 from typing import TypeVar
 
 T = TypeVar('T')
+U = TypeVar('U')
 
 
 def fibonacci_generator(n: int) -> Generator[int, None, None]:
@@ -23,3 +24,7 @@ def filter_generator(iterable: Iterable[T], predicate: Callable[[T], bool]) -> G
     for item in iterable:
         if predicate(item):
             yield item
+
+def map_generator(iterable: Iterable[T], mapper: Callable[[T], U]) -> Generator[U, None, None]:
+    for item in iterable:
+        yield mapper(item)

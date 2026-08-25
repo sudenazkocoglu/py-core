@@ -1,7 +1,12 @@
 
 import pytest
 
-from src.generators_ops import fibonacci_generator, filter_generator, infinite_counter
+from src.generators_ops import (
+    fibonacci_generator,
+    filter_generator,
+    infinite_counter,
+    map_generator,
+)
 
 # ... (önceki testler) ...
 
@@ -62,3 +67,22 @@ def test_filter_generator() -> None:
     # Boş liste testi (listeye çevirerek hızlıca test edebiliriz)
     empty_gen = filter_generator([], lambda x: x > 0)
     assert list(empty_gen) == []
+
+def test_map_generator() -> None:
+    numbers = [1, 2, 3, 4]
+    # Her sayının karesini alan jeneratör
+    gen = map_generator(numbers, lambda x: x ** 2)
+    
+    assert next(gen) == 1
+    assert next(gen) == 4
+    assert next(gen) == 9
+    assert next(gen) == 16
+    
+    # Elemanlar bittiğinde StopIteration fırlatmalı
+    with pytest.raises(StopIteration):
+        next(gen)
+        
+    # Metin dönüştürme testi (farklı veri tipleriyle çalıştığını doğrulama)
+    words = ["hello", "world"]
+    upper_gen = map_generator(words, lambda s: s.upper())
+    assert list(upper_gen) == ["HELLO", "WORLD"]

@@ -1,5 +1,5 @@
 from collections import defaultdict
-from typing import TypeVar
+from typing import Any, TypeVar
 
 T = TypeVar('T')
 
@@ -50,7 +50,7 @@ def group_dicts_by_key(items: list[dict[str, U]], key: str) -> dict[U, list[dict
         grouped[group_key].append(item)
     return dict(grouped)
 
-def deep_merge_dicts(d1: dict, d2: dict) -> dict:
+def deep_merge_dicts(d1: dict[str, Any], d2: dict[str, Any]) -> dict[str, Any]:
     result = d1.copy()
     for key, value in d2.items():
         if key in result and isinstance(result[key], dict) and isinstance(value, dict):

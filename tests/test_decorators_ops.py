@@ -2,7 +2,12 @@ import time
 
 import pytest
 
-from src.decorators_ops import measure_execution_time, memoize, retry_on_exception
+from src.decorators_ops import (
+    log_calls,
+    measure_execution_time,
+    memoize,
+    retry_on_exception,
+)
 
 
 def test_retry_on_exception() -> None:
@@ -64,4 +69,21 @@ def test_memoize() -> None:
     # Farklı argümanla çağrıldığında yeniden hesaplanır
     assert expensive_computation(10) == 20
     assert call_count == 2
+
+def test_log_calls(capsys: pytest.CaptureFixture[str]) -> None:
+    @log_calls
+    def multiply(a: int, b: int) -> int:
+        return a * b
+
+    result = multiply(4, 5)
+    
+    # Orijinal sonuç doğru dönmeli
+    assert result == 20
+    
+    # Konsola fonksiyon adı, argümanlar ve sonuç yazdırılmış olmalı
+    captured = capsys.readouterr()
+    assert "multiply" in captured.out
+    assert "4" in captured.out
+    assert "5" in captured.out
+    assert "20" in captured.out
 

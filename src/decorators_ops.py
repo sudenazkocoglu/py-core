@@ -47,3 +47,18 @@ def memoize(func: F) -> F:
         return cache[key]
         
     return cast(F, wrapper)
+
+def log_calls(func: F) -> F:
+    @wraps(func)
+    def wrapper(*args: Any, **kwargs: Any) -> Any:
+        args_repr = [repr(a) for a in args]
+        kwargs_repr = [f"{k}={v!r}" for k, v in kwargs.items()]
+        signature = ", ".join(args_repr + kwargs_repr)
+        print(f"Calling '{func.__name__}({signature})'")
+        
+        result = func(*args, **kwargs)
+        
+        print(f"'{func.__name__}' returned {result!r}")
+        return result
+        
+    return cast(F, wrapper)

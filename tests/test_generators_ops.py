@@ -5,6 +5,7 @@ from src.generators_ops import (
     chain_generators,
     fibonacci_generator,
     filter_generator,
+    generate_combinations,
     infinite_counter,
     map_generator,
 )
@@ -91,3 +92,21 @@ def test_chain_generators() -> None:
     # Boş yapılarla test
     assert list(chain_generators([], [], [99])) == [99]
     assert list(chain_generators()) == []
+
+def test_generate_combinations() -> None:
+    items = ["A", "B", "C"]
+    # 2'li kombinasyonları üreten jeneratör
+    gen = generate_combinations(items, 2)
+    
+    assert next(gen) == ("A", "B")
+    assert next(gen) == ("A", "C")
+    assert next(gen) == ("B", "C")
+    
+    # Elemanlar bittiğinde StopIteration fırlatmalı
+    import pytest
+    with pytest.raises(StopIteration):
+        next(gen)
+        
+    # Boş liste veya tek elemanlı liste testleri
+    assert list(generate_combinations([], 2)) == []
+    assert list(generate_combinations(["A"], 2)) == []

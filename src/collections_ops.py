@@ -88,3 +88,4 @@ def partition_list(items: list[T], predicate: Callable[[T], bool]) -> tuple[list
         else:
             false_list.append(item)
     return true_list, false_list
+

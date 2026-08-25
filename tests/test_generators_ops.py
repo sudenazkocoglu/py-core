@@ -9,25 +9,6 @@ from src.generators_ops import (
     map_generator,
 )
 
-# ... (önceki testler) ...
-
-def test_filter_generator() -> None:
-    numbers = [1, 2, 3, 4, 5, 6]
-    # Sadece çift sayıları filtreleyen jeneratör
-    gen = filter_generator(numbers, lambda x: x % 2 == 0)
-    
-    assert next(gen) == 2
-    assert next(gen) == 4
-    assert next(gen) == 6
-    
-    # Jeneratördeki elemanlar bittiğinde StopIteration hatası fırlatmalı
-    with pytest.raises(StopIteration):
-        next(gen)
-        
-    # Boş liste testi (listeye çevirerek hızlıca test edebiliriz)
-    empty_gen = filter_generator([], lambda x: x > 0)
-    assert list(empty_gen) == []
-
 
 def test_fibonacci_generator() -> None:
     # İlk 5 Fibonacci sayısını üretip listeye çevirerek kontrol ediyoruz

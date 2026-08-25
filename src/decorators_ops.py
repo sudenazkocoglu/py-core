@@ -1,5 +1,7 @@
 import time
 import types
+import os
+from pathlib import Path
 from collections.abc import Callable
 from functools import wraps
 from typing import Any, TypeVar, cast
@@ -120,3 +122,21 @@ class SuppressException:
         exc_tb: types.TracebackType | None,
     ) -> bool:
         return exc_type is not None and issubclass(exc_type, self.exceptions)
+
+    class ChangeDirectory:
+    def __init__(self, new_path: str | Path) -> None:
+        self.new_path = Path(new_path)
+        self.original_path: Path = Path()
+
+    def __enter__(self) -> Self:
+        self.original_path = Path.cwd()
+        os.chdir(self.new_path)
+        return self
+
+    def __exit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc_val: BaseException | None,
+        exc_tb: types.TracebackType | None,
+    ) -> None:
+        os.chdir(self.original_path)

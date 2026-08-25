@@ -3,6 +3,7 @@ import time
 import pytest
 
 from src.decorators_ops import (
+    ChangeDirectory,
     SuppressException,
     TimerContext,
     log_calls,
@@ -120,3 +121,13 @@ def test_suppress_exception() -> None:
     # Başka türde bir hata gelirse bastırılmamalı ve dışarı fırlatılmalı
     with pytest.raises(TypeError), SuppressException(ValueError):
         raise TypeError("Bu hata bastırılmayacak")
+
+def test_change_directory(tmp_path: Path) -> None:
+    original_dir = Path.cwd()
+    
+    # Geçici bir dizine geçiş yapalım
+    with ChangeDirectory(tmp_path):
+        assert Path.cwd().resolve() == tmp_path.resolve()
+    
+    # Blok dışına çıkıldığında orijinal dizine geri dönülmeli
+    assert Path.cwd().resolve() == original_dir.resolve()

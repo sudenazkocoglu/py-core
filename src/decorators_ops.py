@@ -2,7 +2,7 @@ import time
 import types
 from collections.abc import Callable
 from functools import wraps
-from typing import Any, TypeVar, cast
+from typing import Any, Self, TypeVar, cast
 
 F = TypeVar("F", bound=Callable[..., Any])
 
@@ -92,10 +92,10 @@ class TimerContext:
         self.start_time: float = 0.0
         self.elapsed: float = 0.0
 
-    def __enter__(self) -> "TimerContext":
+    def __enter__(self) -> Self:
         self.start_time = time.perf_counter()
-        return self
-
+        return self 
+        
     def __exit__(
         self,
         exc_type: type[BaseException] | None,

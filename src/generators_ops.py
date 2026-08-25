@@ -9,3 +9,9 @@ def fibonacci_generator(n: int) -> Generator[int, None, None]:
     for _ in range(n):
         yield a
         a, b = b, a + b
+
+    def infinite_counter(start: int, step: int = 1) -> Generator[int, None, None]:
+    current = start
+    while True:
+        yield current
+        current += step

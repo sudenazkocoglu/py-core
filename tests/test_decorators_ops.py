@@ -1,8 +1,28 @@
-import time
+from src.decorators_ops import measure_execution_time, retry_on_exception
 
-import pytest
 
-from src.decorators_ops import measure_execution_time
+def test_retry_on_exception() -> None:
+    attempts = 0
+
+    @retry_on_exception(exception=ValueError, retries=3, delay=0.01)
+    def unstable_task() -> str:
+        nonlocal attempts
+        attempts += 1
+        if attempts < 3:
+            raise ValueError("Geçici hata")
+        return "başarılı"
+
+    result = unstable_task()
+    assert result == "başarılı"
+    assert attempts == 3
+
+    # Belirtilen deneme hakkı aşılırsa hata fırlatmalı
+    @retry_on_exception(exception=ValueError, retries=2, delay=0.01)
+    def always_fails() -> None:
+        raise ValueError("Kalıcı hata")
+
+    with pytest.raises(ValueError):
+        always_fails()
 
 
 def test_measure_execution_time(capsys: pytest.CaptureFixture[str]) -> None:
@@ -19,3 +39,26 @@ def test_measure_execution_time(capsys: pytest.CaptureFixture[str]) -> None:
     # Konsola süre ile ilgili bir çıktı basmış olmalı
     captured = capsys.readouterr()
     assert "Execution time" in captured.out or "dummy_task" in captured.out
+
+def test_retry_on_exception() -> None:
+    attempts = 0
+
+    @retry_on_exception(exception=ValueError, retries=3, delay=0.01)
+    def unstable_task() -> str:
+        nonlocal attempts
+        attempts += 1
+        if attempts < 3:
+            raise ValueError("Geçici hata")
+        return "başarılı"
+
+    result = unstable_task()
+    assert result == "başarılı"
+    assert attempts == 3
+
+    # Belirtilen deneme hakkı aşılırsa hata fırlatmalı
+    @retry_on_exception(exception=ValueError, retries=2, delay=0.01)
+    def always_fails() -> None:
+        raise ValueError("Kalıcı hata")
+
+    with pytest.raises(ValueError):
+        always_fails()

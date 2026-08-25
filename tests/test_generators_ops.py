@@ -5,6 +5,7 @@ import pytest
 
 from src.generators_ops import (
     chain_generators,
+    chunk_generator,
     fibonacci_generator,
     filter_generator,
     generate_cartesian_product,
@@ -149,3 +150,20 @@ def test_generate_cartesian_product() -> None:
     # Tek havuz veya boş havuz testleri
     assert list(generate_cartesian_product([1, 2])) == [(1,), (2,)]
     assert list(generate_cartesian_product([], [1, 2])) == []
+
+def test_chunk_generator() -> None:
+    numbers = [1, 2, 3, 4, 5, 6, 7]
+    # Her defasında 3 elemanlı gruplar oluşturan jeneratör
+    gen = chunk_generator(numbers, 3)
+    
+    assert next(gen) == (1, 2, 3)
+    assert next(gen) == (4, 5, 6)
+    assert next(gen) == (7,) # Kalan son eleman
+    
+    # Elemanlar bittiğinde StopIteration fırlatmalı
+    with pytest.raises(StopIteration):
+        next(gen)
+        
+    # Geçersiz chunk boyutu kontrolü (sıfır veya negatif olamaz)
+    with pytest.raises(ValueError):
+        list(chunk_generator([1, 2], 0))

@@ -1,5 +1,5 @@
 from collections.abc import Callable, Generator, Iterable
-from itertools import combinations, permutations, product
+from itertools import combinations, islice, permutations, product
 from typing import TypeVar
 
 T = TypeVar('T')
@@ -42,3 +42,14 @@ def generate_permutations(iterable: Iterable[T], r: int | None = None) -> Genera
 
 def generate_cartesian_product(*iterables: Iterable[T]) -> Generator[tuple[T, ...], None, None]:
     yield from product(*iterables)
+
+def chunk_generator(iterable: Iterable[T], chunk_size: int) -> Generator[tuple[T, ...], None, None]:
+    if chunk_size <= 0:
+        raise ValueError("Chunk size must be greater than zero.")
+    
+    iterator = iter(iterable)
+    while True:
+        batch = list(islice(iterator, chunk_size))
+        if not batch:
+            break
+        yield tuple(batch)

@@ -3,6 +3,7 @@ import time
 import pytest
 
 from src.decorators_ops import (
+    SuppressException,
     TimerContext,
     log_calls,
     measure_execution_time,
@@ -110,3 +111,12 @@ def test_timer_context() -> None:
     
     # Süre ölçülmüş ve 0'dan büyük olmalı
     assert timer.elapsed >= 0.04
+
+def test_suppress_exception() -> None:
+    # Belirtilen hata türü bastırılmalı ve kod blok boyunca akmaya devam etmeli
+    with SuppressException(ValueError):
+        raise ValueError("Bu hata bastırılacak")
+    
+    # Başka türde bir hata gelirse bastırılmamalı ve dışarı fırlatılmalı
+    with pytest.raises(TypeError), SuppressException(ValueError):
+        raise TypeError("Bu hata bastırılmayacak")

@@ -105,3 +105,21 @@ class TimerContext:
         exc_tb: types.TracebackType | None,
     ) -> None:
         self.elapsed = time.perf_counter() - self.start_time
+
+class SuppressException:
+    def __init__(self, *exceptions: type[Exception]) -> None:
+        self.exceptions = exceptions
+
+    def __enter__(self) -> Self:
+        return self
+
+    def __exit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc_val: BaseException | None,
+        exc_tb: types.TracebackType | None,
+    ) -> bool:
+        if exc_type is not None and issubclass(exc_type, self.exceptions):
+            # True döndürmek hatanın dışarı fırlatılmasını (bastırılmasını) sağlar
+            return True
+        return False

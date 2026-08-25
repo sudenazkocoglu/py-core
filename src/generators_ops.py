@@ -10,7 +10,7 @@ def fibonacci_generator(n: int) -> Generator[int, None, None]:
         yield a
         a, b = b, a + b
 
-    def infinite_counter(start: int, step: int = 1) -> Generator[int, None, None]:
+def infinite_counter(start: int, step: int = 1) -> Generator[int, None, None]:
     current = start
     while True:
         yield current

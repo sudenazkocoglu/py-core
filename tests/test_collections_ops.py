@@ -9,6 +9,7 @@ from src.collections_ops import (
     invert_dict,
     merge_dicts,
     rotate_list,
+    sort_dicts_by_key,
 )
 
 
@@ -78,3 +79,17 @@ def test_deep_merge_dicts() -> None:
     expected = {"a": {"x": 1, "y": 2}, "b": 2, "c": 3}
     assert deep_merge_dicts(d1, d2) == expected
     assert deep_merge_dicts({}, {"x": 1}) == {"x": 1}
+
+def test_sort_dicts_by_key() -> None:
+    data = [
+        {"name": "Ali", "age": 25},
+        {"name": "Ayşe", "age": 22},
+        {"name": "Mehmet", "age": 30}
+    ]
+    sorted_data = sort_dicts_by_key(data, "age")
+    assert sorted_data[0]["name"] == "Ayşe"
+    assert sorted_data[-1]["name"] == "Mehmet"
+    
+    # Azalan (descending) sıralama testi
+    sorted_desc = sort_dicts_by_key(data, "age", reverse=True)
+    assert sorted_desc[0]["name"] == "Mehmet"

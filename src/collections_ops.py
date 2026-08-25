@@ -58,3 +58,6 @@ def deep_merge_dicts(d1: dict[str, Any], d2: dict[str, Any]) -> dict[str, Any]:
         else:
             result[key] = value
     return result
+
+def sort_dicts_by_key(items: list[dict[str, Any]], key: str, reverse: bool = False) -> list[dict[str, Any]]:
+    return sorted(items, key=lambda x: x[key], reverse=reverse)

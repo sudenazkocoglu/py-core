@@ -11,6 +11,7 @@ from src.collections_ops import (
     group_dicts_by_key,
     invert_dict,
     merge_dicts,
+    partition_list,
     rotate_list,
     sort_dicts_by_key,
 )
@@ -116,3 +117,11 @@ def test_filter_dict_by_value() -> None:
     filtered = filter_dict_by_value(d, lambda x: x > 3)
     assert filtered == {"b": 5, "c": 10}
     assert filter_dict_by_value({}, lambda x: x > 0) == {}
+
+def test_partition_list() -> None:
+    items = [1, 2, 3, 4, 5, 6]
+    even, odd = partition_list(items, lambda x: x % 2 == 0)
+    assert even == [2, 4, 6]
+    assert odd == [1, 3, 5]
+    
+    assert partition_list([], lambda x: x > 0) == ([], [])

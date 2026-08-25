@@ -78,3 +78,13 @@ def flatten_dict(d: dict[str, Any], parent_key: str = "", sep: str = ".") -> dic
 
 def filter_dict_by_value(d: dict[str, Any], predicate: Callable[[Any], bool]) -> dict[str, Any]:
     return {k: v for k, v in d.items() if predicate(v)}
+
+def partition_list(items: list[T], predicate: Callable[[T], bool]) -> tuple[list[T], list[T]]:
+    true_list: list[T] = []
+    false_list: list[T] = []
+    for item in items:
+        if predicate(item):
+            true_list.append(item)
+        else:
+            false_list.append(item)
+    return true_list, false_list

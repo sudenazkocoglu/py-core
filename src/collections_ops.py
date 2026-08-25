@@ -10,3 +10,6 @@ def get_frequencies(items: list[T]) -> dict[T, int]:
     for item in items:
         freq[item] = freq.get(item, 0) + 1
     return freq
+
+def chunk_list(items: list[T], size: int) -> list[list[T]]:
+    return [items[i:i + size] for i in range(0, len(items), size)]

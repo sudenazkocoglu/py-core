@@ -1,4 +1,5 @@
 import time
+import types
 from collections.abc import Callable
 from functools import wraps
 from typing import Any, TypeVar, cast
@@ -95,5 +96,10 @@ class TimerContext:
         self.start_time = time.perf_counter()
         return self
 
-    def __exit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
+    def __exit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc_val: BaseException | None,
+        exc_tb: types.TracebackType | None,
+    ) -> None:
         self.elapsed = time.perf_counter() - self.start_time

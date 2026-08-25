@@ -3,6 +3,7 @@ from src.collections_ops import (
     find_common_elements,
     flatten_list,
     get_frequencies,
+    get_list_difference,
     invert_dict,
     merge_dicts,
     rotate_list,
@@ -49,3 +50,9 @@ def test_rotate_list() -> None:
     assert rotate_list([1, 2], 5) == [2, 1]  # 5 adım kaydırmak aslında 1 adım kaydırmaktır (5 % 2 = 1)
     assert rotate_list([], 3) == []
     assert rotate_list([1, 2, 3], 0) == [1, 2, 3]
+
+def test_get_list_difference() -> None:
+    assert get_list_difference([1, 2, 3, 4], [3, 4, 5]) == [1, 2]
+    assert get_list_difference(["a", "b"], ["c", "d"]) == ["a", "b"]
+    assert get_list_difference([1, 2], [1, 2]) == []
+    assert get_list_difference([], [1, 2]) == []

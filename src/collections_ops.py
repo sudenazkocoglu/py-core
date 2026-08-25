@@ -37,3 +37,7 @@ def rotate_list(items: list[T], k: int) -> list[T]:
         return items
         
     return items[-k:] + items[:-k]
+
+def get_list_difference(list1: list[T], list2: list[T]) -> list[T]:
+    set2 = set(list2)
+    return [item for item in list1 if item not in set2]

@@ -13,8 +13,12 @@ from src.typing_ops import (
 def test_get_first_item(girdi, beklenen):
     assert get_first_item(girdi) == beklenen
 
-def test_process_mapping():
-    assert process_mapping({"a": 1, "b": "text"}) == ["a: 1", "b: text"]
+@pytest.mark.parametrize("mapping,beklenen", [
+    ({"a": 1, "b": "text"}, ["a: 1", "b: text"]),
+    ({}, [])
+])
+def test_process_mapping(mapping, beklenen):
+    assert process_mapping(mapping) == beklenen
 
 def test_apply_function():
     assert apply_function(lambda x: x * 2, 5) == 10
@@ -26,18 +30,33 @@ def test_apply_function():
 def test_add_elements(val1, val2, beklenen):
     assert add_elements(val1, val2) == beklenen
 
-def test_parse_status():
-    assert parse_status("active") == "Status is active"
+@pytest.mark.parametrize("status,beklenen", [
+    ("active", "Status is active"),
+    ("inactive", "Status is inactive")
+])
+def test_parse_status(status, beklenen):
+    assert parse_status(status) == beklenen
 
-def test_filter_sequence():
-    assert filter_sequence([1, 5, 10, 15], 8) == [10, 15]
+@pytest.mark.parametrize("seq,threshold,beklenen", [
+    ([1, 5, 10, 15], 8, [10, 15]),
+    ([1, 2, 3], 5, [])
+])
+def test_filter_sequence(seq, threshold, beklenen):
+    assert filter_sequence(seq, threshold) == beklenen
 
-def test_format_user_info():
-    assert format_user_info("Sudenaz") == "User: Sudenaz"
-    assert format_user_info("Sudenaz", 21) == "User: Sudenaz, Age: 21"
+@pytest.mark.parametrize("args,beklenen", [
+    (("Sudenaz",), "User: Sudenaz"),
+    (("Sudenaz", 21), "User: Sudenaz, Age: 21")
+])
+def test_format_user_info(args, beklenen):
+    assert format_user_info(*args) == beklenen
 
-def test_calculate_total():
-    assert calculate_total([10.5, 20.0, 4.5]) == 35.0
+@pytest.mark.parametrize("prices,beklenen", [
+    ([10.5, 20.0, 4.5], 35.0),
+    ([], 0.0)
+])
+def test_calculate_total(prices, beklenen):
+    assert calculate_total(prices) == beklenen
 
 @pytest.mark.parametrize("deger", [100, "test"])
 def test_identity_generator(deger):

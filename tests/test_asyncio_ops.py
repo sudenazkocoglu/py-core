@@ -14,18 +14,27 @@ def test_fetch_multiple():
     results = asyncio.run(fetch_multiple([(0.01, "a"), (0.01, "b")]))
     assert results == ["a", "b"]
 
-def test_fetch_with_timeout():
-    assert asyncio.run(fetch_with_timeout(0.01, 0.1)) == "Success"
-    assert asyncio.run(fetch_with_timeout(0.1, 0.01)) == "Timeout"
+@pytest.mark.parametrize("delay,timeout_val,expected", [
+    (0.01, 0.1, "Success"),  # Zamanında biten
+    (0.1, 0.01, "Timeout")   # Zaman aşımına uğrayan
+])
+def test_fetch_with_timeout(delay, timeout_val, expected):
+    assert asyncio.run(fetch_with_timeout(delay, timeout_val)) == expected
 
-def test_process_queue():
-    assert asyncio.run(process_queue([1, 2, 3])) == [2, 4, 6]
+@pytest.mark.parametrize("queue,expected", [
+    ([1, 2, 3], [2, 4, 6]),
+    ([], [])
+])
+def test_process_queue(queue, expected):
+    assert asyncio.run(process_queue(queue)) == expected
 
 def test_rate_limited_fetch():
     assert asyncio.run(rate_limited_fetch([1, 2, 3], 2)) == [10, 20, 30]
 
 def test_safe_async_call():
+    # Başarılı senaryo
     assert asyncio.run(safe_async_call(False)) == "OK"
+    # Hata fırlatan senaryo
     with pytest.raises(ValueError):
         asyncio.run(safe_async_call(True))
 
@@ -40,8 +49,12 @@ def test_async_timer():
             return True
     assert asyncio.run(test_timer()) is True
 
-def test_chain_async_operations():
-    assert asyncio.run(chain_async_operations(10)) == 30  # (10 + 5) * 2
+@pytest.mark.parametrize("val,expected", [
+    (10, 30), # (10 + 5) * 2
+    (0, 10)   # (0 + 5) * 2
+])
+def test_chain_async_operations(val, expected):
+    assert asyncio.run(chain_async_operations(val)) == expected
 
 def test_retry_async_operation():
     attempt_count = 0
